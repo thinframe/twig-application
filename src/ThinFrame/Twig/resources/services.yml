@@ -1,0 +1,23 @@
+services:
+    thinframe.twig.views_path_mapper:
+        class: 'ThinFrame\Twig\ViewPathMapper'
+
+    thinframe.twig.filesystem:
+        class: 'Twig_Loader_Filesystem'
+        arguments: ['/']
+
+    thinframe.twig.environment:
+        class: 'Twig_Environment'
+        arguments: ['@thinframe.twig.filesystem']
+
+    thinframe.twig.listeners.application_metadata:
+        class: 'ThinFrame\Twig\Listeners\ApplicationMetadataListener'
+        arguments: ['@thinframe.twig.views_path_mapper']
+        tags:
+          - {name: 'thinframe.events.listener'}
+
+    thinframe.twig.listeners.view_render:
+        class: 'ThinFrame\Twig\Listeners\ViewRenderListener'
+        arguments: ['@thinframe.twig.environment', '@thinframe.twig.views_path_mapper']
+        tags:
+          - {name: 'thinframe.events.listener'}
