@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * /src/ThinFrame/Twig/Listeners/ViewRenderListener.php
+ *
+ * @copyright 2013 Sorin Badea <sorin.badea91@gmail.com>
+ * @license   MIT license (see the license file in the root directory)
+ */
+
 namespace ThinFrame\Twig\Listeners;
 
 use ThinFrame\Events\ListenerInterface;
@@ -61,7 +69,7 @@ class ViewRenderListener implements ListenerInterface
             /* @var $response View */
             $event->setActionResponse(
                 $this->twig->render(
-                    $this->pathMapper->translate($response->getIdentifier()),
+                    $response->getIdentifier(),
                     $response->getVariables()
                 )
             );
