@@ -1,0 +1,15 @@
+{
+    "name": "thinframe/twig-application",
+    "description": "Twig View for Karma Framework",
+    "require": {
+        "twig/twig": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sorin Badea",
+            "email": "sorin.badea91@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
