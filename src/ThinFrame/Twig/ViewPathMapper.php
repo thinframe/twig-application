@@ -10,6 +10,8 @@
 namespace ThinFrame\Twig;
 
 use PhpCollection\Map;
+use ThinFrame\Applications\AbstractApplication;
+use ThinFrame\Applications\DependencyInjection\ApplicationAwareInterface;
 use ThinFrame\Foundation\Exceptions\InvalidArgumentException;
 
 /**
@@ -18,7 +20,7 @@ use ThinFrame\Foundation\Exceptions\InvalidArgumentException;
  * @package ThinFrame\Twig
  * @since   0.1
  */
-class ViewPathMapper
+class ViewPathMapper implements ApplicationAwareInterface
 {
     /**
      * @var Map
@@ -32,6 +34,27 @@ class ViewPathMapper
     {
         $this->paths = new Map();
     }
+
+    /**
+     * Attach application to current instance
+     *
+     * @param AbstractApplication $application
+     *
+     * @return mixed
+     */
+    public function setApplication(AbstractApplication $application)
+    {
+        foreach ($application->getMetadata() as $applicationName => $metadata) {
+            /* @var $metadata Map */
+            if ($metadata->containsKey('views')) {
+                $this->addMapping(
+                    $applicationName,
+                    $metadata->get('application_path')->get() . DIRECTORY_SEPARATOR . $metadata->get('views')->get()
+                );
+            }
+        }
+    }
+
 
     /**
      * Add a path mapping
@@ -58,7 +81,7 @@ class ViewPathMapper
         $parts = explode(':', $identifier, 2);
         if (count($parts) == 2) {
             $basePath = $this->paths->get($parts[0])->getOrThrow(
-                new InvalidArgumentException('Invalid application name for view')
+                new InvalidArgumentException('Invalid application name for view identifier: ' . $identifier)
             );
             if (!file_exists($basePath . DIRECTORY_SEPARATOR . $parts[1])) {
                 throw new InvalidArgumentException('Invalid view name');

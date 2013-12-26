@@ -11,6 +11,7 @@ namespace ThinFrame\Twig;
 
 use ThinFrame\Foundation\Constants\DataType;
 use ThinFrame\Foundation\Helpers\TypeCheck;
+use ThinFrame\Karma\ViewController\View;
 
 /**
  * Class View
@@ -18,7 +19,7 @@ use ThinFrame\Foundation\Helpers\TypeCheck;
  * @package ThinFrame\Twig
  * @since   0.1
  */
-class View
+class TwigView extends View
 {
     /**
      * @var string
@@ -28,6 +29,11 @@ class View
      * @var array
      */
     private $variables;
+
+    /**
+     * @var \Twig_Environment
+     */
+    private $twig;
 
     /**
      * Constructor
@@ -60,5 +66,25 @@ class View
     public function getVariables()
     {
         return $this->variables;
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     */
+    public function setTwig(\Twig_Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        try {
+            return $this->twig->render($this->viewIdentifier, $this->variables);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

@@ -10,14 +10,8 @@ services:
         class: 'Twig_Environment'
         arguments: ['@thinframe.twig.loader']
 
-    thinframe.twig.listeners.application_metadata:
-        class: 'ThinFrame\Twig\Listeners\ApplicationMetadataListener'
-        arguments: ['@thinframe.twig.views_path_mapper']
-        tags:
-          - {name: 'thinframe.events.listener'}
-
-    thinframe.twig.listeners.view_render:
-        class: 'ThinFrame\Twig\Listeners\ViewRenderListener'
-        arguments: ['@thinframe.twig.environment', '@thinframe.twig.views_path_mapper']
+    thinframe.twig.listeners.view:
+        class: 'ThinFrame\Twig\Listeners\ViewListener'
+        arguments: ['@thinframe.twig.environment', '@thinframe.twig.views_path_mapper','@thinframe.annotations.collector']
         tags:
           - {name: 'thinframe.events.listener'}
