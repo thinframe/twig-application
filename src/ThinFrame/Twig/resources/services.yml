@@ -15,3 +15,12 @@ services:
         arguments: ['@thinframe.twig.environment', '@thinframe.twig.views_path_mapper','@thinframe.annotations.collector']
         tags:
           - {name: 'thinframe.events.listener'}
+
+    thinframe.twig.configuration:
+        class: 'ThinFrame\Twig\Configuration'
+
+    thinframe.twig.listeners.error_pages:
+        class: 'ThinFrame\Twig\Listeners\ErrorPageListener'
+        tags:
+          - {name: 'thinframe.events.listener'}
+        arguments: ['@thinframe.twig.configuration','@thinframe.twig.environment']

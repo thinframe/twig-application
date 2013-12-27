@@ -11,6 +11,7 @@ namespace ThinFrame\Twig;
 
 use ThinFrame\Applications\AbstractApplication;
 use ThinFrame\Applications\DependencyInjection\ContainerConfigurator;
+use ThinFrame\Applications\DependencyInjection\Extensions\ConfigurationManager;
 
 
 /**
@@ -19,7 +20,6 @@ use ThinFrame\Applications\DependencyInjection\ContainerConfigurator;
  * @package ThinFrame\Twig
  * @since   0.1
  */
-
 class TwigApplication extends AbstractApplication
 {
     /**
@@ -31,7 +31,9 @@ class TwigApplication extends AbstractApplication
      */
     public function initializeConfigurator(ContainerConfigurator $configurator)
     {
-        // noop
+        $configurator->addConfigurationManager(
+            new ConfigurationManager('thinframe.twig', 'thinframe.twig.configuration')
+        );
     }
 
     /**
@@ -42,7 +44,8 @@ class TwigApplication extends AbstractApplication
     public function getConfigurationFiles()
     {
         return [
-            'resources/services.yml'
+            'resources/services.yml',
+            'resources/config.yml'
         ];
     }
 
