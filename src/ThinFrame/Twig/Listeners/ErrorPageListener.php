@@ -58,7 +58,20 @@ class ErrorPageListener implements ListenerInterface
     {
         $config     = $this->configuration->getConfiguration();
         $statusCode = (string)$event->getHttpException()->getStatusCode();
-        print_r($config);
+        if (isset($config['error_views']) && isset($config['error_views'][$statusCode])) {
+            try {
+                $event->getResponse()->setStatusCode($event->getHttpException()->getStatusCode());
+                $event->getResponse()->setContent(
+                    $this->twig->render(
+                        $config['error_views'][$statusCode],
+                        ['exception' => $event->getHttpException()]
+                    )
+                );
+                $event->stopPropagation();
+            } catch (\Exception $e) {
+
+            }
+        }
     }
 
 }

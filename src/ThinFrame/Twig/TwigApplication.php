@@ -32,7 +32,7 @@ class TwigApplication extends AbstractApplication
     public function initializeConfigurator(ContainerConfigurator $configurator)
     {
         $configurator->addConfigurationManager(
-            new ConfigurationManager('thinframe.twig', 'thinframe.twig.configuration')
+            new ConfigurationManager('twig', 'thinframe.twig.configuration')
         );
     }
 
