@@ -8,7 +8,7 @@ services:
 
     thinframe.twig.environment:
         class: 'Twig_Environment'
-        arguments: ['@thinframe.twig.loader']
+        arguments: ['@thinframe.twig.loader',{auto_reload: true,cache: 'app/cache/twig'}]
 
     thinframe.twig.listeners.view:
         class: 'ThinFrame\Twig\Listeners\ViewListener'
