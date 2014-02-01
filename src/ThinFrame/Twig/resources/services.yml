@@ -1,3 +1,5 @@
+parameters:
+    thinframe.twig.cache_dir: 'app/cache/twig'
 services:
     thinframe.twig.views_path_mapper:
         class: 'ThinFrame\Twig\ViewPathMapper'
@@ -8,7 +10,7 @@ services:
 
     thinframe.twig.environment:
         class: 'Twig_Environment'
-        arguments: ['@thinframe.twig.loader',{auto_reload: true,cache: 'app/cache/twig'}]
+        arguments: ['@thinframe.twig.loader',{auto_reload: true, cache: '%thinframe.twig.cache_dir%'}]
 
     thinframe.twig.listeners.view:
         class: 'ThinFrame\Twig\Listeners\ViewListener'
@@ -24,3 +26,9 @@ services:
         tags:
           - {name: 'thinframe.events.listener'}
         arguments: ['@thinframe.twig.configuration','@thinframe.twig.environment']
+
+    thinframe.twig.listeners.cache:
+        class: 'ThinFrame\Twig\Listeners\CacheListener'
+        arguments: ['@thinframe.twig.environment']
+        tags:
+          - {name: 'thinframe.events.listener'}
