@@ -1,18 +1,15 @@
 <?php
 
 /**
- * /src/ThinFrame/Twig/ViewPathMapper.php
- *
- * @author Sorin Badea <sorin.badea91@gmail.com>
+ * @author    Sorin Badea <sorin.badea91@gmail.com>
  * @license   MIT license (see the license file in the root directory)
  */
 
 namespace ThinFrame\Twig;
 
 use PhpCollection\Map;
-use ThinFrame\Applications\AbstractApplication;
-use ThinFrame\Applications\DependencyInjection\ApplicationAwareInterface;
-use ThinFrame\Foundation\Exceptions\InvalidArgumentException;
+use ThinFrame\Applications\DependencyInjection\ApplicationAwareTrait;
+use ThinFrame\Foundation\Exception\InvalidArgumentException;
 
 /**
  * Class ViewPathMapper
@@ -20,8 +17,10 @@ use ThinFrame\Foundation\Exceptions\InvalidArgumentException;
  * @package ThinFrame\Twig
  * @since   0.1
  */
-class ViewPathMapper implements ApplicationAwareInterface
+class ViewMapper
 {
+    use ApplicationAwareTrait;
+
     /**
      * @var Map
      */
@@ -36,20 +35,16 @@ class ViewPathMapper implements ApplicationAwareInterface
     }
 
     /**
-     * Attach application to current instance
-     *
-     * @param AbstractApplication $application
-     *
-     * @return mixed
+     * Map applications views
      */
-    public function setApplication(AbstractApplication $application)
+    public function mapViews()
     {
-        foreach ($application->getMetadata() as $applicationName => $metadata) {
+        foreach ($this->application->getMetadata() as $applicationName => $metadata) {
             /* @var $metadata Map */
             if ($metadata->containsKey('views')) {
                 $this->addMapping(
                     $applicationName,
-                    $metadata->get('application_path')->get() . DIRECTORY_SEPARATOR . $metadata->get('views')->get()
+                    $metadata->get('path')->get() . DIRECTORY_SEPARATOR . $metadata->get('views')->get()
                 );
             }
         }
@@ -86,6 +81,7 @@ class ViewPathMapper implements ApplicationAwareInterface
             if (!file_exists($basePath . DIRECTORY_SEPARATOR . $parts[1])) {
                 throw new InvalidArgumentException('Invalid view name');
             }
+
             return $basePath . DIRECTORY_SEPARATOR . $parts[1];
         } else {
             throw new InvalidArgumentException('Invalid view name provided');

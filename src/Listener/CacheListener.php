@@ -20,16 +20,16 @@ class CacheListener implements ListenerInterface
     /**
      * @var \Twig_Environment
      */
-    private $twig;
+    private $twigEnvironment;
 
     /**
      * Constructor
      *
-     * @param \Twig_Environment $twig
+     * @param \Twig_Environment $twigEnvironment
      */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(\Twig_Environment $twigEnvironment)
     {
-        $this->twig = $twig;
+        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**
@@ -50,8 +50,8 @@ class CacheListener implements ListenerInterface
      */
     public function onCacheClear()
     {
-        if ($this->twig->getCache() and is_dir($this->twig->getCache())) {
-            $this->deleteTwigFilesFrom($this->twig->getCache());
+        if ($this->twigEnvironment->getCache() and is_dir($this->twigEnvironment->getCache())) {
+            $this->deleteTwigFilesFrom($this->twigEnvironment->getCache());
         }
     }
 
@@ -92,7 +92,7 @@ class CacheListener implements ListenerInterface
                 );
             } else {
                 if (StaticStringy::endsWith($element, '.html.twig')) {
-                    $this->twig->loadTemplate($applicationName . ":" . $baseDir . $element);
+                    $this->twigEnvironment->loadTemplate($applicationName . ":" . $baseDir . $element);
                 }
             }
         }

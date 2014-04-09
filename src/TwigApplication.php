@@ -49,7 +49,8 @@ class TwigApplication extends AbstractApplication
     {
         $configurator->addResources(
             [
-                'Resources/config/services.yml'
+                'Resources/config/services.yml',
+                'Resources/config/listeners.yml',
             ]
         );
     }

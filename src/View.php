@@ -3,23 +3,23 @@
 /**
  * /src/ThinFrame/Twig/View.php
  *
- * @author Sorin Badea <sorin.badea91@gmail.com>
+ * @author    Sorin Badea <sorin.badea91@gmail.com>
  * @license   MIT license (see the license file in the root directory)
  */
 
 namespace ThinFrame\Twig;
 
-use ThinFrame\Foundation\Constants\DataType;
-use ThinFrame\Foundation\Helpers\TypeCheck;
-use ThinFrame\Karma\ViewController\View;
+use ThinFrame\Foundation\Constant\DataType;
+use ThinFrame\Foundation\Helper\TypeCheck;
+use ThinFrame\Karma\Controller\ViewInterface;
+
 
 /**
  * Class View
  *
  * @package ThinFrame\Twig
- * @since   0.1
  */
-class TwigView extends View
+class View implements ViewInterface
 {
     /**
      * @var string
@@ -33,7 +33,7 @@ class TwigView extends View
     /**
      * @var \Twig_Environment
      */
-    private $twig;
+    private $twigEnvironment;
 
     /**
      * Constructor
@@ -69,11 +69,11 @@ class TwigView extends View
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig_Environment $twigEnvironment
      */
-    public function setTwig(\Twig_Environment $twig)
+    public function setTwigEnvironment(\Twig_Environment $twigEnvironment)
     {
-        $this->twig = $twig;
+        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**
@@ -82,7 +82,7 @@ class TwigView extends View
     public function __toString()
     {
         try {
-            return $this->twig->render($this->viewIdentifier, $this->variables);
+            return $this->twigEnvironment->render($this->viewIdentifier, $this->variables);
         } catch (\Exception $e) {
             return $e->getMessage();
         }

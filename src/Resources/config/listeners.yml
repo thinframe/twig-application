@@ -1,0 +1,6 @@
+services:
+    twig.listener.views:
+        class: 'ThinFrame\Twig\Listener\ViewsListener'
+        arguments: ['@twig.view_mapper','@twig.environment','@annotations.collector']
+        tags:
+            - { name: 'events.listener' }

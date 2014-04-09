@@ -18,16 +18,16 @@ namespace ThinFrame\Twig;
 class TemplateLoader extends \Twig_Loader_Filesystem
 {
     /**
-     * @var ViewPathMapper
+     * @var ViewMapper
      */
     private $pathMapper;
 
     /**
      * Constructor
      *
-     * @param ViewPathMapper $pathMapper
+     * @param ViewMapper $pathMapper
      */
-    public function __construct(ViewPathMapper $pathMapper)
+    public function __construct(ViewMapper $pathMapper)
     {
         $this->pathMapper = $pathMapper;
     }

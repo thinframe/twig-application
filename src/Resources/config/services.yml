@@ -1,34 +1,34 @@
 parameters:
     twig.cache_dir: 'app/cache/twig'
 services:
-    twig.views_path_mapper:
-        class: 'ThinFrame\Twig\ViewPathMapper'
+    twig.view_mapper:
+        class: 'ThinFrame\Twig\ViewMapper'
 
     twig.loader:
         class: 'ThinFrame\Twig\TemplateLoader'
-        arguments: ['@thinframe.twig.views_path_mapper']
+        arguments: ['@twig.view_mapper']
 
     twig.environment:
         class: 'Twig_Environment'
         arguments: ['@twig.loader',{auto_reload: true, cache: '%twig.cache_dir%'}]
 
-    twig.listeners.view:
-        class: 'ThinFrame\Twig\Listeners\ViewListener'
-        arguments: ['@thinframe.twig.environment', '@thinframe.twig.views_path_mapper','@thinframe.annotations.collector']
-        tags:
-          - {name: 'thinframe.events.listener'}
-
-    thinframe.twig.configuration:
-        class: 'ThinFrame\Twig\Configuration'
-
-    thinframe.twig.listeners.error_pages:
-        class: 'ThinFrame\Twig\Listeners\ErrorPageListener'
-        tags:
-          - {name: 'thinframe.events.listener'}
-        arguments: ['@thinframe.twig.configuration','@thinframe.twig.environment']
-
-    thinframe.twig.listeners.cache:
-        class: 'ThinFrame\Twig\Listeners\CacheListener'
-        arguments: ['@thinframe.twig.environment']
-        tags:
-          - {name: 'thinframe.events.listener'}
+#    twig.listeners.view:
+#        class: 'ThinFrame\Twig\Listeners\ViewListener'
+#        arguments: ['@thinframe.twig.environment', '@thinframe.twig.views_path_mapper','@thinframe.annotations.collector']
+#        tags:
+#          - {name: 'thinframe.events.listener'}
+#
+#    thinframe.twig.configuration:
+#        class: 'ThinFrame\Twig\Configuration'
+#
+#    thinframe.twig.listeners.error_pages:
+#        class: 'ThinFrame\Twig\Listeners\ErrorPageListener'
+#        tags:
+#          - {name: 'thinframe.events.listener'}
+#        arguments: ['@thinframe.twig.configuration','@thinframe.twig.environment']
+#
+#    thinframe.twig.listeners.cache:
+#        class: 'ThinFrame\Twig\Listeners\CacheListener'
+#        arguments: ['@thinframe.twig.environment']
+#        tags:
+#          - {name: 'thinframe.events.listener'}
