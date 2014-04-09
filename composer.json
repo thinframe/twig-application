@@ -15,11 +15,12 @@
         }
     ],
     "require": {
-        "twig/twig": "dev-master"
+        "twig/twig": "dev-master",
+        "thinframe/applications": "dev-develop"
     },
     "autoload": {
-        "psr-0": {
-            "": "src"
+        "psr-4": {
+            "ThinFrame\\Twig\\": "src/"
         }
     }
 }
