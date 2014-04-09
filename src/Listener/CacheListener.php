@@ -1,21 +1,29 @@
 <?php
 
-namespace ThinFrame\Twig\Listeners;
+/**
+ * @author    Sorin Badea <sorin.badea91@gmail.com>
+ * @license   MIT license (see the license file in the root directory)
+ */
+
+namespace ThinFrame\Twig\Listener;
 
 use PhpCollection\Map;
 use Stringy\StaticStringy;
 use ThinFrame\Applications\DependencyInjection\ApplicationAwareTrait;
+use ThinFrame\Events\DispatcherAwareTrait;
 use ThinFrame\Events\ListenerInterface;
+use ThinFrame\Events\SimpleEvent;
+use ThinFrame\Karma\Events;
 
 /**
  * Class CacheListener
- *
- * @package ThinFrame\Twig\Listeners
+ * @package ThinFrame\Twig\Listener
  * @since   0.2
  */
 class CacheListener implements ListenerInterface
 {
     use ApplicationAwareTrait;
+    use DispatcherAwareTrait;
 
     /**
      * @var \Twig_Environment
@@ -40,8 +48,8 @@ class CacheListener implements ListenerInterface
     public function getEventMappings()
     {
         return [
-            'karma.cache.clear'  => ['method' => 'onCacheClear'],
-            'karma.cache.warmup' => ['method' => 'onCacheWarmup'],
+            Events::CACHE_CLEAR  => ['method' => 'onCacheClear'],
+            Events::CACHE_WARMUP => ['method' => 'onCacheWarmup'],
         ];
     }
 
@@ -60,10 +68,11 @@ class CacheListener implements ListenerInterface
      */
     public function onCacheWarmup()
     {
+        $this->dispatcher->trigger(new SimpleEvent(Events::VIEWS_MAP));
         foreach ($this->application->getMetadata() as $appName => $metadata) {
             /* @var $metadata Map */
             if ($metadata->containsKey('views')) {
-                $viewsPath = $metadata->get('application_path')->get() . DIRECTORY_SEPARATOR . $metadata->get(
+                $viewsPath = $metadata->get('path')->get() . DIRECTORY_SEPARATOR . $metadata->get(
                         'views'
                     )->get();
                 $this->cacheTwigFilesFrom($viewsPath, '', $appName);

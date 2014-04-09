@@ -4,3 +4,15 @@ services:
         arguments: ['@twig.view_mapper','@twig.environment','@annotations.collector']
         tags:
             - { name: 'events.listener' }
+
+    twig.listener.cache:
+        class: 'ThinFrame\Twig\Listener\CacheListener'
+        arguments: ['@twig.environment']
+        tags:
+            - { name: 'events.listener' }
+
+    twig.listener.error_page:
+        class: 'ThinFrame\Twig\Listener\ErrorPageListener'
+        arguments: ['@twig.environment']
+        tags:
+            - { name: 'events.listener' }

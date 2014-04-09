@@ -1,9 +1,7 @@
 <?php
 
 /**
- * /src/ThinFrame/Twig/TemplateLoader.php
- *
- * @author Sorin Badea <sorin.badea91@gmail.com>
+ * @author    Sorin Badea <sorin.badea91@gmail.com>
  * @license   MIT license (see the license file in the root directory)
  */
 
@@ -13,7 +11,7 @@ namespace ThinFrame\Twig;
  * Class TemplateLoader
  *
  * @package ThinFrame\Twig
- * @since   0.1
+ * @since   0.2
  */
 class TemplateLoader extends \Twig_Loader_Filesystem
 {

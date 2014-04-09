@@ -12,10 +12,9 @@ use ThinFrame\Applications\DependencyInjection\ApplicationAwareTrait;
 use ThinFrame\Foundation\Exception\InvalidArgumentException;
 
 /**
- * Class ViewPathMapper
- *
+ * Class ViewMapper
  * @package ThinFrame\Twig
- * @since   0.1
+ * @since   0.2
  */
 class ViewMapper
 {

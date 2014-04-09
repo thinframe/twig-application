@@ -1,8 +1,6 @@
 <?php
 
 /**
- * /src/ThinFrame/Twig/View.php
- *
  * @author    Sorin Badea <sorin.badea91@gmail.com>
  * @license   MIT license (see the license file in the root directory)
  */
@@ -16,8 +14,8 @@ use ThinFrame\Karma\Controller\ViewInterface;
 
 /**
  * Class View
- *
  * @package ThinFrame\Twig
+ * @since   0.2
  */
 class View implements ViewInterface
 {

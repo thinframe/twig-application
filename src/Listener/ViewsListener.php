@@ -12,8 +12,8 @@ use ThinFrame\Twig\ViewMapper;
 
 /**
  * Class ViewsListener
- *
  * @package ThinFrame\Twig\Listener
+ * @since   0.2
  */
 class ViewsListener implements ListenerInterface
 {
@@ -55,6 +55,7 @@ class ViewsListener implements ListenerInterface
     {
         return [
             Events::PRE_SERVER_START          => ['method' => 'onServerPreStart'],
+            Events::VIEWS_MAP                 => ['method' => 'onServerPreStart'],
             ControllerResponseEvent::EVENT_ID => ['method' => 'onControllerResponse']
         ];
     }

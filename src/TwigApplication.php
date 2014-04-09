@@ -10,6 +10,7 @@ namespace ThinFrame\Twig;
 use PhpCollection\Map;
 use ThinFrame\Applications\AbstractApplication;
 use ThinFrame\Applications\DependencyInjection\ContainerConfigurator;
+use ThinFrame\Twig\DependencyInjection\HybridExtension;
 
 
 /**
@@ -47,12 +48,16 @@ class TwigApplication extends AbstractApplication
      */
     protected function setConfiguration(ContainerConfigurator $configurator)
     {
-        $configurator->addResources(
-            [
-                'Resources/config/services.yml',
-                'Resources/config/listeners.yml',
-            ]
-        );
+        $configurator
+            ->addResources(
+                [
+                    'Resources/config/services.yml',
+                    'Resources/config/listeners.yml',
+                ]
+            )
+            ->addExtension($hybridExtension = new HybridExtension())
+            ->addCompilerPass($hybridExtension);
+
     }
 
     /**
