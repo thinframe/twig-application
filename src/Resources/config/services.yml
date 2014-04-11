@@ -1,13 +1,18 @@
 parameters:
     twig.cache_dir: '%karma.paths.root%/app/cache/twig'
+    #classes
+    twig.view_mapper.class: 'ThinFrame\Twig\ViewMapper'
+    twig.loader.class: 'ThinFrame\Twig\TemplateLoader'
+    twig.environment.class: 'Twig_Environment'
+
 services:
     twig.view_mapper:
-        class: 'ThinFrame\Twig\ViewMapper'
+        class: '%twig.view_mapper.class%'
 
     twig.loader:
-        class: 'ThinFrame\Twig\TemplateLoader'
+        class: '%twig.loader.class%'
         arguments: ['@twig.view_mapper']
 
     twig.environment:
-        class: 'Twig_Environment'
+        class: '%twig.environment.class%'
         arguments: ['@twig.loader',{auto_reload: true, cache: '%twig.cache_dir%'}]

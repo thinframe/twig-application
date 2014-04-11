@@ -1,18 +1,22 @@
+parameters:
+    twig.listener.views.class: 'ThinFrame\Twig\Listener\ViewsListener'
+    twig.listener.cache.class: 'ThinFrame\Twig\Listener\CacheListener'
+    twig.listener.error_page.class: 'ThinFrame\Twig\Listener\ErrorPageListener'
 services:
     twig.listener.views:
-        class: 'ThinFrame\Twig\Listener\ViewsListener'
+        class: '%twig.listener.views.class%'
         arguments: ['@twig.view_mapper','@twig.environment','@annotations.collector']
         tags:
             - { name: 'events.listener' }
 
     twig.listener.cache:
-        class: 'ThinFrame\Twig\Listener\CacheListener'
+        class: '%twig.listener.cache.class%'
         arguments: ['@twig.environment']
         tags:
             - { name: 'events.listener' }
 
     twig.listener.error_page:
-        class: 'ThinFrame\Twig\Listener\ErrorPageListener'
+        class: '%twig.listener.error_page.class%'
         arguments: ['@twig.environment']
         tags:
             - { name: 'events.listener' }
